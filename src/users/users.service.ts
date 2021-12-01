@@ -4,9 +4,17 @@ import { Injectable } from '@nestjs/common';
 
 @Injectable()
 export class UsersService {
-  private users: User[] = [{ id: 0, name: 'Huy' }];
+  private users: User[] = [
+    { id: 0, name: 'Huy' },
+    { id: 0, name: 'Van' },
+    { id: 0, name: 'Vinh' },
+    { id: 0, name: 'Nam' },
+  ];
 
-  findAll() {
+  findAll(name?: string): User[] {
+    if (name) {
+      return this.users.filter((user) => user.name === name);
+    }
     return this.users;
   }
 
