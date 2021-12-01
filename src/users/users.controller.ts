@@ -23,20 +23,31 @@ import {
 @ApiTags('users')
 @Controller('users')
 export class UsersController {
-  constructor(private usersService: UsersService) {}
+  constructor(private readonly usersService: UsersService) {}
+
+  @Get()
+  async createUserDB(): Promise<User[]> {
+    // const user = await this.usersService.createUserDB("huy");
+
+    // return this.usersService.updateUser(user.id, "something else");
+    
+    // return this.usersService.deleteUser(1);
+    return this.usersService.getAllUsers()
+  }
+
 
   @ApiOkResponse({ type: User, isArray: true })
   @ApiQuery({ name: 'name', required: false })
-  @Get()
-  getUsers(@Query('name') name?: string): User[] {
-    return this.usersService.findAll(name);
+  @Get('all')
+  getUsers(@Query('name') name?: string): Promise<User[]> {
+    return this.usersService.getAllUsers();
   }
 
   @ApiOkResponse({ type: User, description: 'the user' })
   @ApiNotFoundResponse()
   @Get(':id')
-  getUserById(@Param('id', ParseIntPipe) id: number): User {
-    const user = this.usersService.findById(id);
+  getUserById(@Param('id', ParseIntPipe) id: number): Promise<User> {
+    const user = this.usersService.getOneById(id);
     if (!user) {
       throw new NotFoundException();
     }
@@ -46,7 +57,7 @@ export class UsersController {
   @ApiCreatedResponse({ type: User })
   @ApiBadRequestResponse()
   @Post()
-  createUser(@Body() body: CreateUserDTO): User {
-    return this.usersService.createUser(body);
+  createUser(@Body() body?: CreateUserDTO, ): Promise<User> {
+    return this.usersService.createUserDB(body.name);
   }
 }
