@@ -23,8 +23,8 @@ import {
 @ApiTags('users')
 @Controller('users')
 export class UsersController {
-  constructor(private readonly usersService: UsersService) {}
-
+  // constructor(private readonly usersService: UsersService) {}
+  /*
   @Get()
   async createUserDB(): Promise<User[]> {
     // const user = await this.usersService.createUserDB("huy");
@@ -59,5 +59,5 @@ export class UsersController {
   @Post()
   createUser(@Body() body?: CreateUserDTO, ): Promise<User> {
     return this.usersService.createUserDB(body.name);
-  }
+  }*/
 }
